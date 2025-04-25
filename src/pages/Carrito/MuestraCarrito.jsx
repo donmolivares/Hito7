@@ -1,5 +1,4 @@
 import { useContext } from 'react'
-
 import { GlobalContext } from "../../context/GlobalContext";
 import ElementoCarrito from './ElementoCarrito'
 import TotalizadorCarrito from './TotalizadorCarrito'
@@ -9,17 +8,15 @@ import './Carrito.css'
 
 
 const MuestraCarrito = () => {
-  const {carrito, totalcompra, setTotalCompra} = useContext(GlobalContext)
-
-  const acero = (valor) => {
-    
-    setTotalCompra(valor)
-  }  
-
+  const {carrito, TotalizadorCarrito2} = useContext(GlobalContext)
+  TotalizadorCarrito2()
+ 
+ 
   return (
     <>
         {carrito.length > 0 ? (
         <>
+         
           <ElementoCarrito/>
           <TotalizadorCarrito/>
         </>

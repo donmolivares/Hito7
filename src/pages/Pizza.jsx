@@ -1,25 +1,38 @@
 import '../assets/Style.css'
 import { useState, useEffect } from "react";
-
+import { Link } from 'react-router-dom';
 import React from 'react'
+import { useParams } from 'react-router-dom';
+import { GlobalContext } from "../context/GlobalContext"
+import { useContext } from 'react';
 
 function Pizza() {
+    const {buyProducts} = useContext(GlobalContext);
+    
 
  const [info, setInfo] = useState([]);
  const [info2, setInfo2] = useState([]);
  const [info3, setInfo3] = useState([]);
  const [info4, setInfo4] = useState([]);
  const [info5, setInfo5] = useState([]);
+ const {cualpizza} = useParams();
+
+ const [product, setProduct] = useState(null)
 
  useEffect(() => {
         consultarInformacion();
- }, []);
+ }, [product, cualpizza]);
 
+ 
+ 
  // 1. Función que consulta la API
  const consultarInformacion = async () => {
-   const url = 'http://localhost:5000/api/pizzas/p001';
+   const url = `http://localhost:5000/api/pizzas/${cualpizza}`;
    const response = await fetch(url)
    const data = await response.json()
+   setProduct(data)
+
+   
    
    setInfo(`${data.desc}`); // con setInfo actualizamos el estado
    setInfo2(`${data.price}`);
@@ -54,10 +67,15 @@ function Pizza() {
                  <h3 style={{color:"black"}}>Precio $ : {info2}</h3>
              </div> 
              <div className="flex-row">
-                 <button class="btn btn-secondary">Añadir 🛒</button>
+                 <Link className="nav-link" aria-current="page" to={'/'}>
+                  
+                  <button class="btn btn-secondary">👈 Atras</button>
+                 </Link>
+           
+                 <button class="btn btn-secondary" onClick={() => buyProducts(product)} >Añadir 🛒</button>
              </div>
          </div>     
-         </div>
+         </div> 
 </div>
 
 

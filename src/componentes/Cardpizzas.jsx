@@ -1,12 +1,14 @@
-import { useContext } from 'react';
+
 import '../assets/Style.css'
 import Pizza from '../pages/Pizza'
 import { Link } from "react-router-dom";
 import { GlobalContext } from "../context/GlobalContext"
 
+import { useContext } from 'react';
+
 
 const Cardpizzas = ({product}) => {
-  const {buyProducts} = useContext(GlobalContext);
+  const {buyProducts,TotalizadorCarrito2} = useContext(GlobalContext);
     return(
        <div className="card-pizza">
             <img className="imagen-pizza" src={product.img} alt={product.name}/>
@@ -27,12 +29,12 @@ const Cardpizzas = ({product}) => {
                 )}
 
             <p>- </p>
-            </div>
-
+            </div> 
+ 
             <h3 style={{color:"black"}}>Precio $ : {product.price}</h3>
             
             <div className="flex-row">
-            <Link className="nav-link" aria-current="page" to="/Pizza">
+            <Link className="nav-link" aria-current="page" to={`/Pizza/${product.id}`}>
                   
               <button class="btn btn-light">Ver mas 👀</button>
              </Link>

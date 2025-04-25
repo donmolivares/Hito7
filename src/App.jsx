@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { Navigate, Route, Routes } from "react-router-dom";
 import './App.css'
 import Header from './componentes/Header' 
@@ -11,12 +11,17 @@ import Pizza from './pages/Pizza'
 import MuestraCarrito from './pages/Carrito/MuestraCarrito'
 import Register from './pages/Register'
 import Login from './pages/Login'
+import { GlobalContext } from "./context/GlobalContext"
+
 import Cardpizzas from './componentes/Cardpizzas';
+
 
 
 
 function App() {
   const [count, setCount] = useState(0)
+  const {setUser, user, token, setToken} = useContext(GlobalContext);
+  console.log(user)
   const userIsLogged = false;
   return (
     <>
@@ -24,13 +29,15 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login/>} />
+          <Route path="/login" element={token ? <Navigate to={"/"} /> : <Login />} />
+          <Route path="/register" element={token ? <Navigate to={"/"} /> :<Register />} />
+          
           <Route path="/carrito" element={<MuestraCarrito/>} />
-          <Route path="/pizza" element={<Pizza/>} />
+          <Route path="/pizza/:cualpizza" element={<Pizza/>} />
+      
        
-  
-          <Route path="/profile" element={<Profile/>} />
+          <Route path="/profile" element={!token ? <Navigate to={"/login"} /> : <Profile />} />
+          
           <Route path="*" element={<Notfound/>} />
         </Routes>
         <Footer />
@@ -38,6 +45,6 @@ function App() {
     </>
   );
 }
-
+ 
 
 export default App
